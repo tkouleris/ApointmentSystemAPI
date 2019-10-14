@@ -18,4 +18,23 @@ class LoginApiTest extends TestCase
 
         $response->assertStatus(400);
     }
+
+    public function test_login_attempt_with_wrong_credentials()
+    {
+        $response = $this->post('api/login',
+                                ['UsrEmail'=>'test@email.gr'
+                                ,'UsrPassword'=>'secret']);
+
+        $response->assertStatus(401);
+    }
+
+
+    public function test_login_attempt_with_correct_credentials()
+    {
+        $response = $this->post('api/login',
+                                ['UsrEmail'=>'admin@as.com'
+                                ,'UsrPassword'=>'secret']);
+
+        $response->assertStatus(200);
+    }
 }

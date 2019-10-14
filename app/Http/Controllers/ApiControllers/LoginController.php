@@ -4,6 +4,8 @@ namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -17,6 +19,19 @@ class LoginController extends Controller
             return response()->json($results,400);
         }
 
+        $User = User::where('UsrEmail','=', $request->input('UsrEmail'))
+                    ->first();
+
+        if( $User == null){
+            $results['success'] = false;
+            $results['message'] = 'Unauthorized!';
+            return response()->json($results,401);
+        }
+
+
+        $results['success'] = true;
+        $results['data'] = $User;
+        return response()->json($results,200);
 
     }
 }
