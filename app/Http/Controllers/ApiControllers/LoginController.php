@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use JWTAuth;
 
 class LoginController extends Controller
 {
@@ -37,9 +38,12 @@ class LoginController extends Controller
         }
 
 
-        $results['success'] = true;
-        $results['data'] = $User;
-        return response()->json($results,200);
+        if (!$token =JWTAuth::fromUser($User) ) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+
+        return response()->json(['token'=>$token]);
 
     }
 }

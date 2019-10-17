@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use JWTAuth;
 
 
 class LoginApiTest extends TestCase
@@ -59,7 +60,7 @@ class LoginApiTest extends TestCase
 
         $response = $this->post('api/login',$credentials);
 
-
         $response->assertStatus(200);
+        $this->assertArrayHasKey('token', $response->decodeResponseJson() );
     }
 }
