@@ -29,6 +29,14 @@ class LoginController extends Controller
         }
 
 
+        if( !Hash::check( $request->UsrPassword, $User->UsrPassword) )
+        {
+            $results['success'] = false;
+            $results['message'] = 'Unauthorized!';
+            return response()->json($results,401);
+        }
+
+
         $results['success'] = true;
         $results['data'] = $User;
         return response()->json($results,200);
