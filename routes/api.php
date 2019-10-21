@@ -18,3 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login','ApiControllers\LoginController@login');
+
+Route::group(['middleware' => ['jwt.auth']], function() {
+
+    Route::get('contacts', 'ApiControllers\ContactController@getContacts');
+
+});
