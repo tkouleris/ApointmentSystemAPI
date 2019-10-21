@@ -16,4 +16,13 @@ class ContactController extends Controller
         $results['data'] = $Contacts;
         return response()->json($results,200);
     }
+
+    public function addContact(Request $request)
+    {
+        $Contact = Contact::create($request->input());
+
+        $results['success'] = true;
+        $results['data'] = $Contact;
+        return response()->json($results,200);
+    }
 }
