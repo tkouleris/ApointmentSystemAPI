@@ -86,7 +86,7 @@ class ContactsApiTest extends TestCase
                             );
 
 
-        $response->assertOK();
+        $response->assertStatus(201);
         $this->assertCount(1, Contact::all() );
     }
 }
