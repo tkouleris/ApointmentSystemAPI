@@ -23,7 +23,6 @@ class UserController extends Controller
             return response()->json($results,401);
         }
 
-        // Todo check request
         $request->merge([
             'UsrPassword' => Hash::make($request->input('UsrPassword')),
         ]);
