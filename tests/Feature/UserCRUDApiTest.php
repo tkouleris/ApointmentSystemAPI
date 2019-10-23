@@ -59,6 +59,7 @@ class UserCRUDApiTest extends TestCase
         $new_user['UsrLastname'] = 'Manolopoulos';
         $new_user['UsrEmail'] = 'gmanolopoulos@gmail.com';
         $new_user['UsrPassword'] = 'secret';
+        $new_user['UsrRoleID'] = 1;
         $response = $this->json('POST',
                                 'api/add_user',
                                 $new_user,
@@ -87,6 +88,26 @@ class UserCRUDApiTest extends TestCase
 
 
         $response->assertStatus(201);
+        $this->assertCount( 2, User::all() );
+    }
+
+    public function create_new_user_by_admin_input_check()
+    {
+        $token = $this->getToken_admin_role();
+
+        $new_user['UsrFirstname'] = 'George';
+        $new_user['UsrLastname'] = 'Manolopoulos';
+        $new_user['UsrEmail'] = 'gmanolopoulos@gmail.com';
+        $new_user['UsrPassword'] = 'secret';
+        $new_user['UsrRoleID'] = 1;
+        $response = $this->json('POST',
+                                'api/add_user',
+                                $new_user,
+                                ['HTTP_Authorization' => 'Bearer '.$token]
+                            );
+
+
+        $response->assertStatus(403);
         $this->assertCount( 2, User::all() );
     }
 
