@@ -91,6 +91,8 @@ class UserCRUDApiTest extends TestCase
         $this->assertCount( 2, User::all() );
     }
 
+
+    /** @test */
     public function create_new_user_by_admin_input_check()
     {
         $token = $this->getToken_admin_role();
@@ -107,48 +109,10 @@ class UserCRUDApiTest extends TestCase
                             );
 
 
-        $response->assertStatus(403);
+        $response->assertStatus(201);
         $this->assertCount( 2, User::all() );
     }
 
-    /** @test */
-    // public function test_login_attempt_with_wrong_credentials()
-//     {
-// //        $this->withoutExceptionHandling();
 
-//         $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret1'];
-
-//         $User = new User;
-//         $User->UsrFirstname = 'admin';
-//         $User->UsrLastname = 'admin';
-//         $User->UsrEmail = 'test@email.gr';
-//         $User->UsrRoleID  = 1;
-//         $User->UsrPassword = Hash::make('secret');
-//         $User->save();
-
-//         $response = $this->post('api/login',$credentials);
-
-
-//         $response->assertStatus(401);
-//     }
-
-    /** @test */
-    // public function test_login_attempt_with_correct_credentials()
-    // {
-    //     $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret'];
-
-    //     $User = new User;
-    //     $User->UsrFirstname = 'admin';
-    //     $User->UsrLastname = 'admin';
-    //     $User->UsrEmail = 'test@email.gr';
-    //     $User->UsrRoleID  = 1;
-    //     $User->UsrPassword = Hash::make('secret');
-    //     $User->save();
-
-    //     $response = $this->post('api/login',$credentials);
-
-    //     $response->assertStatus(200);
-    //     $this->assertArrayHasKey('token', $response->decodeResponseJson() );
-    // }
 
 }

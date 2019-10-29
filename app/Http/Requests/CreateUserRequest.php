@@ -27,7 +27,7 @@ class CreateUserRequest extends FormRequest
             'UsrFirstname' => 'required',
             'UsrLastname' => 'required',
             'UsrEmail' => 'required|email:rfc',
-            'UsrRoleID' => 'required|digits_between:1,2',
+            'UsrRoleID' => 'required|integer|between:1,2',
             'UsrPassword' => 'required|string'
         ];
     }
