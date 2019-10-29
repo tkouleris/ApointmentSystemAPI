@@ -25,4 +25,11 @@ class ContactController extends Controller
         $results['data'] = $Contact;
         return response()->json($results,201);
     }
+
+    public function getContact(Contact $contact)
+    {
+        $results['success'] = true;
+        $results['data'] = $contact;
+        return $results;
+    }
 }

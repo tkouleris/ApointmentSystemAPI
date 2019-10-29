@@ -89,4 +89,49 @@ class ContactsApiTest extends TestCase
         $response->assertStatus(201);
         $this->assertCount(1, Contact::all() );
     }
+
+    public function test_get_an_existing_contact()
+    {
+
+        $token = $this->getToken();
+
+        // First add a contact
+        $new_contact['ContactFirstname'] = 'George';
+        $new_contact['ContactLastname'] = 'Manolopoulos';
+        $response = $this->json('POST',
+                        'api/add_contact',
+                        $new_contact,
+                        ['HTTP_Authorization' => 'Bearer '.$token]
+                    );
+
+
+        // real test - get the contact
+        $data = array();
+        $response = $this->json('POST',
+                        'api/contact/1',
+                        $data,
+                        ['HTTP_Authorization' => 'Bearer '.$token]
+                    );
+
+
+        $response->assertStatus(200);
+    }
+
+    public function test_get_a_non_existing_contact()
+    {
+
+        $token = $this->getToken();
+
+        // real test - get the contact
+        $data = array();
+        $response = $this->json('POST',
+                        'api/contact/1',
+                        $data,
+                        ['HTTP_Authorization' => 'Bearer '.$token]
+                    );
+
+
+        $response->assertStatus(404);
+    }
+
 }
