@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
-use App\Contact;
+use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 

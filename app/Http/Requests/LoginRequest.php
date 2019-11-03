@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
@@ -30,11 +32,11 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
         $results['success'] = false;
         $results['message'] = 'Bad Request!';
         $response = new JsonResponse( $results, 400);
-        throw new \Illuminate\Validation\ValidationException($validator, $response);
+        throw new ValidationException($validator, $response);
     }
 }
