@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Repositories\Interfaces\IUserRepository;
-
 use App\Models\User;
 
 class UserRepository implements IUserRepository{

@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Repositories\Interfaces\IContactRepository;
+use App\Models\Contact;
+
+class ContactRepository implements IContactRepository
+{
+
+    protected $Contact;
+
+    public function __construct( Contact $ContactModel )
+    {
+        $this->Contact = $ContactModel;
+    }
+
+    public function list( $args )
+    {
+        return $this->Contact::all();
+    }
+
+    public function findById( $id )
+    {
+        // TODO
+    }
+
+    public function create( $data )
+    {
+        return $this->Contact::create( $data );
+    }
+
+    public function update( $data )
+    {
+        // TODO
+    }
+
+    public function delete( $id )
+    {
+        // TODO
+    }
+}

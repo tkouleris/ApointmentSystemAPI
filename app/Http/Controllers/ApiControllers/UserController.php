@@ -5,9 +5,9 @@ namespace App\Http\Controllers\ApiControllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use JWTAuth;
-use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
