@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Helper\Interfaces\IJwtHelper;
+use JWTAuth;
 
 class JwtHelper implements IJwtHelper{
 
@@ -11,4 +12,9 @@ class JwtHelper implements IJwtHelper{
         return str_replace("Bearer ", "",$request->header('Authorization'));
     }
 
+
+    public function invalidate_token( $token )
+    {
+        JWTAuth::invalidate($token);
+    }
 }

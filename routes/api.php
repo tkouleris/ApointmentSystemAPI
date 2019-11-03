@@ -26,5 +26,6 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::post('contact/{contact}', 'ApiControllers\ContactController@getContact');
 
     Route::post('add_user', 'ApiControllers\UserController@addUser');
+    Route::post('logout', 'ApiControllers\LoginController@logout');
 
 });

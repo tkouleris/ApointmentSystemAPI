@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiControllers;
 
+use App\Helper\Interfaces\IJwtHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
@@ -13,10 +14,12 @@ class LoginController extends Controller
 {
 
     protected $UserRepository;
+    protected $jwt;
 
-    public function __construct( UserRepository $User)
+    public function __construct( UserRepository $User, IJwtHelper $Jwt)
     {
         $this->UserRepository = $User;
+        $this->jwt = $Jwt;
     }
 
     public function login(LoginRequest $request)
@@ -47,7 +50,15 @@ class LoginController extends Controller
         $results['message'] = 'Login Successfull';
         $results['token'] = $token;
         return response()->json($results,200);
-        // return response()->json(['token'=>$token]);
+    }
 
+    public function logout(Request $request)
+    {
+        $token = $this->jwt->get_token_from_request( $request );
+        $this->jwt->invalidate_token( $token );
+
+        $results['success'] = true;
+        $results['message'] = 'Logged out';
+        return response()->json($results,200);
     }
 }
