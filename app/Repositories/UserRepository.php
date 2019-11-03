@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\IUserRepository;
 use App\Models\User;
+use JWTAuth;
 
 class UserRepository implements IUserRepository{
 
@@ -32,7 +33,7 @@ class UserRepository implements IUserRepository{
 
     public function create( $data )
     {
-        // TODO
+        return $this->User::create( $data );
     }
 
     public function update( $data )
@@ -43,5 +44,10 @@ class UserRepository implements IUserRepository{
     public function delete( $id )
     {
         // TODO
+    }
+
+    public function findByToken($token)
+    {
+        return JWTAuth::toUser($token);
     }
 }

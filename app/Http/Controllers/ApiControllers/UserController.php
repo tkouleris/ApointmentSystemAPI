@@ -7,15 +7,23 @@ use App\Http\Controllers\Controller;
 use JWTAuth;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Repositories\UserRepository;
 
 class UserController extends Controller
 {
+
+    protected $UserRepository;
+
+    public function __construct( UserRepository $User)
+    {
+        $this->UserRepository = $User;
+    }
+
     public function addUser(CreateUserRequest $request)
     {
         $token = str_replace("Bearer ", "",$request->header('Authorization'));
-        $currentUser = JWTAuth::toUser($token);
 
+        $currentUser = $this->UserRepository->findByToken( $token );
         if( !$currentUser->isAdmin() )
         {
             $results['success'] = false;
@@ -26,7 +34,8 @@ class UserController extends Controller
         $request->merge([
             'UsrPassword' => Hash::make($request->input('UsrPassword')),
         ]);
-        $User = User::create($request->input());
+        $this->UserRepository->create( $request->input() );
+
 
         $results['success'] = true;
         return response()->json($results,201);
