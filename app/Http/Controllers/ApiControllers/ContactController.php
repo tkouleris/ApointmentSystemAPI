@@ -26,10 +26,9 @@ class ContactController extends Controller
 
     public function addContact(Request $request)
     {
-        $Contact = Contact::create($request->input());
 
         $results['success'] = true;
-        $results['data'] = $Contact;
+        $results['data'] = $this->ContactRepository->create( $request->input());
         return response()->json($results,201);
     }
 

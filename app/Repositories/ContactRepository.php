@@ -22,7 +22,7 @@ class ContactRepository implements IContactRepository
 
     public function findById( $id )
     {
-        // TODO
+        $this->Contact::findOrFail( $id );
     }
 
     public function create( $data )
