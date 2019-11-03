@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiControllers;
 
+use App\Helper\Interfaces\IJwtHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use JWTAuth;
@@ -13,15 +14,17 @@ class UserController extends Controller
 {
 
     protected $UserRepository;
+    protected $jwt;
 
-    public function __construct( UserRepository $User)
+    public function __construct( UserRepository $User, IJwtHelper $Jwt)
     {
         $this->UserRepository = $User;
+        $this->jwt = $Jwt;
     }
 
     public function addUser(CreateUserRequest $request)
     {
-        $token = str_replace("Bearer ", "",$request->header('Authorization'));
+        $token = $this->jwt->get_token_from_request( $request );
 
         $currentUser = $this->UserRepository->findByToken( $token );
         if( !$currentUser->isAdmin() )

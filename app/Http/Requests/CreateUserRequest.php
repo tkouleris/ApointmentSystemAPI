@@ -2,21 +2,23 @@
 
 namespace App\Http\Requests;
 
+use App\Helper\Interfaces\IJwtHelper;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class CreateUserRequest extends FormRequest
 {
 
     protected $UserRepository;
+    protected $jwt;
 
-    public function __construct( UserRepository $User)
+    public function __construct( UserRepository $User, IJwtHelper $Jwt)
     {
         $this->UserRepository = $User;
+        $this->jwt = $Jwt;
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +27,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        $token = str_replace("Bearer ", "",$this->header('Authorization'));
+        $token = $this->jwt->get_token_from_request( request() );
 
         $currentUser = $this->UserRepository->findByToken( $token );
         if( !$currentUser->isAdmin() ) return false;
