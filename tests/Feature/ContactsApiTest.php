@@ -48,13 +48,11 @@ class ContactsApiTest extends TestCase
         $response = $this->post('api/login',$credentials);
         $token = $response->decodeResponseJson('token');
 
-
         $response = $this->json('GET',
                                 'api/contacts',
                                 array()
                                 ,['HTTP_Authorization' => 'Bearer '.$token]
                             );
-
         $response->assertStatus(200);
     }
 
