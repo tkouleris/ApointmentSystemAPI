@@ -36,9 +36,10 @@ class UserRepository implements IUserRepository{
         return $this->User::create( $data );
     }
 
-    public function update( $data )
+    public function update( $id, $data )
     {
-        // TODO
+        $this->User::where('UsrID',$id)->update($data);
+        return $this->User::findOrFail($id);
     }
 
     public function delete( $id )

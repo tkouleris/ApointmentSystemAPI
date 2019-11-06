@@ -43,4 +43,23 @@ class UserController extends Controller
         $results['success'] = true;
         return response()->json($results,201);
     }
+
+    public function updateUser(Request $request)
+    {
+        $token = $this->jwt->get_token_from_request( $request );
+
+        $currentUser = $this->UserRepository->findByToken( $token );
+
+        if( $request->has('UsrPassword'))
+        {
+            $request->merge([
+                'UsrPassword' => Hash::make($request->input('UsrPassword')),
+            ]);
+        }
+
+        $User_ = $this->UserRepository->update( $currentUser->UsrID, $request->input());
+
+        $results['success'] = true;
+        return response()->json($results,200);
+    }
 }

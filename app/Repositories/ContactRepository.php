@@ -30,7 +30,7 @@ class ContactRepository implements IContactRepository
         return $this->Contact::create( $data );
     }
 
-    public function update( $data )
+    public function update( $id, $data )
     {
         // TODO
     }

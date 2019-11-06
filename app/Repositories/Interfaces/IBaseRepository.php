@@ -6,6 +6,6 @@ interface IBaseRepository {
     public function list( $args );
     public function findById( $id );
     public function create( $data );
-    public function update( $data );
+    public function update( $id, $data );
     public function delete( $id );
 }
