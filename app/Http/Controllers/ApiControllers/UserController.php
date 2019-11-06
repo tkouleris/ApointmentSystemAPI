@@ -5,7 +5,6 @@ namespace App\Http\Controllers\ApiControllers;
 use App\Helper\Interfaces\IJwtHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use JWTAuth;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepository;
