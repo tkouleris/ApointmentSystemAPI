@@ -132,4 +132,36 @@ class ContactsApiTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function test_delete_a_contact()
+    {
+        $token = $this->getToken();
+
+        $new_contact['ContactFirstname'] = 'George';
+        $new_contact['ContactLastname'] = 'Manolopoulos';
+        $response = $this->json(
+                            'POST',
+                            'api/add_contact',
+                            $new_contact,
+                            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
+
+
+        $response->assertStatus(201);
+
+        $Contact = $response->decodeResponseJson('data');
+        $this->assertCount(1, Contact::all() );
+
+
+
+        $response = $this->json(
+            'DELETE',
+            'api/contact/'.$Contact['ContactID'],
+            array(),
+            ['HTTP_Authorization' => 'Bearer '.$token]);
+
+
+        $response->assertStatus(204);
+        $this->assertCount(0, Contact::all() );
+    }
+
 }

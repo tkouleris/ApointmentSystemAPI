@@ -37,6 +37,6 @@ class ContactRepository implements IContactRepository
 
     public function delete( $id )
     {
-        // TODO
+        return $this->Contact::destroy($id);
     }
 }

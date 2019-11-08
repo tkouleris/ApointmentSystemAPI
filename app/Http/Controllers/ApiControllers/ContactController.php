@@ -36,6 +36,16 @@ class ContactController extends Controller
     {
         $results['success'] = true;
         $results['data'] = $contact;
-        return $results;
+        return response()->json($results,200);
+    }
+
+    public function deleteContact(Contact $contact)
+    {
+        $this->ContactRepository->delete($contact->ContactID);
+
+        $results['success'] = true;
+        $results['data'] = $contact;
+        return response()->json($results,204);
+
     }
 }

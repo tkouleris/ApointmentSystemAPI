@@ -24,6 +24,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('contacts', 'ApiControllers\ContactController@getContacts');
     Route::post('add_contact', 'ApiControllers\ContactController@addContact');
     Route::post('contact/{contact}', 'ApiControllers\ContactController@getContact');
+    Route::delete('contact/{contact}', 'ApiControllers\ContactController@deleteContact');
 
     Route::post('add_user', 'ApiControllers\UserController@addUser');
     Route::post('update_user', 'ApiControllers\UserController@updateUser');
