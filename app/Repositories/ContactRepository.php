@@ -32,7 +32,11 @@ class ContactRepository implements IContactRepository
 
     public function update( $id, $data )
     {
-        // TODO
+        $this->Contact::where('ContactID',$id)
+            ->update($data);
+
+        return $this->Contact::where('ContactID',$id)->first();
+
     }
 
     public function delete( $id )

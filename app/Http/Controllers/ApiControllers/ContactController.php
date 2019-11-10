@@ -48,4 +48,13 @@ class ContactController extends Controller
         return response()->json($results,204);
 
     }
+
+    public function updateContact(Contact $contact, Request $request)
+    {
+        $upd_contact = $this->ContactRepository->update($contact->ContactID, $request->input());
+
+        $results['success'] = true;
+        $results['data'] = $upd_contact;
+        return response()->json($results,200);
+    }
 }
