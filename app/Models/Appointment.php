@@ -10,6 +10,6 @@ class Appointment extends Model
     protected $primaryKey = 'ApntID' ;
 
     protected $fillable = [
-        'ApntDate', 'ApntContactID', 'ApntUserID', 'Comments'
+        'ApntDate', 'ApntContactID', 'ApntUsrID', 'Comments'
     ];
 }
