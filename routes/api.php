@@ -31,6 +31,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::post('update_user', 'ApiControllers\UserController@updateUser');
 
     Route::post('add_appointment', 'ApiControllers\AppointmentController@addAppointment');
+    Route::put('appointment/{appointment}', 'ApiControllers\AppointmentController@updateAppointment');
 
     Route::post('logout', 'ApiControllers\LoginController@logout');
 

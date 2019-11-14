@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiControllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helper\Interfaces\IJwtHelper;
+use App\Models\Appointment;
 use App\Repositories\Interfaces\IUserRepository;
 use App\Repositories\Interfaces\IAppointmentRepository;
 use Carbon\Carbon;
@@ -36,5 +37,14 @@ class AppointmentController extends Controller
         $results['success'] = true;
         $results['data'] = $this->AppntRepository->create( $request->input());
         return response()->json($results,201);
+    }
+
+    public function updateAppointment(Appointment $appointment, Request $request)
+    {
+        $upd_appnt = $this->AppntRepository->update($appointment->ApntID, $request->input());
+
+        $results['success'] = true;
+        $results['data'] = $upd_appnt;
+        return response()->json($results,200);
     }
 }
