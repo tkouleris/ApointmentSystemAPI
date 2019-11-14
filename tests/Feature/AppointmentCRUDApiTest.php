@@ -61,18 +61,18 @@ class AppointmentCRUDApiTest extends TestCase
         $data_params['ApntContactID'] = 1;
         $data_params['Comments'] = 'Examination';
         $response = $this->json(
-                        'POST',
-                        'api/add_appointment',
-                        $data_params,
-                        ['HTTP_Authorization' => 'Bearer '.$token]
-                    );
+            'POST',
+            'api/add_appointment',
+            $data_params,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
 
         $response->assertStatus(201);
         $this->assertCount( 1, Appointment::all() );
     }
 
-        /**
+    /**
     * @test
     */
     public function update_appointment()
@@ -83,11 +83,11 @@ class AppointmentCRUDApiTest extends TestCase
         $data_params['ApntContactID'] = 1;
         $data_params['Comments'] = 'Examination';
         $response = $this->json(
-                        'POST',
-                        'api/add_appointment',
-                        $data_params,
-                        ['HTTP_Authorization' => 'Bearer '.$token]
-                    );
+            'POST',
+            'api/add_appointment',
+            $data_params,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
 
         $response->assertStatus(201);

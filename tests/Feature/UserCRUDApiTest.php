@@ -48,6 +48,7 @@ class UserCRUDApiTest extends TestCase
 
         return $token;
     }
+
     /**
     * @test
     */
@@ -60,12 +61,12 @@ class UserCRUDApiTest extends TestCase
         $new_user['UsrEmail'] = 'gmanolopoulos@gmail.com';
         $new_user['UsrPassword'] = 'secret';
         $new_user['UsrRoleID'] = 1;
-        $response = $this->json('POST',
-                                'api/add_user',
-                                $new_user,
-                                ['HTTP_Authorization' => 'Bearer '.$token]
-                            );
-
+        $response = $this->json(
+            'POST',
+            'api/add_user',
+            $new_user,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
         $response->assertStatus(401);
     }
@@ -81,12 +82,11 @@ class UserCRUDApiTest extends TestCase
         $new_user['UsrPassword'] = 'secret';
         $new_user['UsrRoleID'] = 1;
         $response = $this->json(
-                    'POST',
-                    'api/add_user',
-                    $new_user,
-                    ['HTTP_Authorization' => 'Bearer '.$token]
+            'POST',
+            'api/add_user',
+            $new_user,
+            ['HTTP_Authorization' => 'Bearer '.$token]
         );
-
 
         $response->assertStatus(201);
         $this->assertCount( 2, User::all() );
@@ -103,12 +103,12 @@ class UserCRUDApiTest extends TestCase
         $new_user['UsrEmail'] = 'gmanolopoulos@gmail.com';
         $new_user['UsrPassword'] = 'secret';
         $new_user['UsrRoleID'] = 1;
-        $response = $this->json('POST',
-                                'api/add_user',
-                                $new_user,
-                                ['HTTP_Authorization' => 'Bearer '.$token]
-                            );
-
+        $response = $this->json(
+            'POST',
+            'api/add_user',
+            $new_user,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
         $response->assertStatus(201);
         $this->assertCount( 2, User::all() );

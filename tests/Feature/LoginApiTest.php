@@ -55,7 +55,6 @@ class LoginApiTest extends TestCase
 
         $response = $this->post('api/login',$credentials);
 
-
         $response->assertStatus(401);
     }
 
@@ -83,20 +82,20 @@ class LoginApiTest extends TestCase
         $token = $this->getToken_admin_role();
 
         $response = $this->json(
-                        'POST',
-                        'api/logout',
-                        array()
-                        ,['HTTP_Authorization' => 'Bearer '.$token]
+            'POST',
+            'api/logout',
+            array(),
+            ['HTTP_Authorization' => 'Bearer '.$token]
         );
 
         $response->assertStatus(200);
 
 
         $response = $this->json(
-                        'GET',
-                        'api/contacts',
-                        array()
-                        ,['HTTP_Authorization' => 'Bearer '.$token]
+            'GET',
+            'api/contacts',
+            array(),
+            ['HTTP_Authorization' => 'Bearer '.$token]
         );
 
         $response->assertStatus(401);

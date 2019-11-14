@@ -71,18 +71,15 @@ class ContactsApiTest extends TestCase
 
     public function test_insert_a_new_contact()
     {
-        // $this->withoutExceptionHandling();
-
         $token = $this->getToken();
 
         $new_contact['ContactFirstname'] = 'George';
         $new_contact['ContactLastname'] = 'Manolopoulos';
         $response = $this->json('POST',
-                                'api/add_contact',
-                                $new_contact,
-                                ['HTTP_Authorization' => 'Bearer '.$token]
-                            );
-
+            'api/add_contact',
+            $new_contact,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
         $response->assertStatus(201);
         $this->assertCount(1, Contact::all() );
@@ -97,19 +94,18 @@ class ContactsApiTest extends TestCase
         $new_contact['ContactFirstname'] = 'George';
         $new_contact['ContactLastname'] = 'Manolopoulos';
         $response = $this->json('POST',
-                        'api/add_contact',
-                        $new_contact,
-                        ['HTTP_Authorization' => 'Bearer '.$token]
-                    );
-
+            'api/add_contact',
+            $new_contact,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
         // real test - get the contact
         $data = array();
         $response = $this->json('POST',
-                        'api/contact/1',
-                        $data,
-                        ['HTTP_Authorization' => 'Bearer '.$token]
-                    );
+            'api/contact/1',
+            $data,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
 
         $response->assertStatus(200);
@@ -117,17 +113,15 @@ class ContactsApiTest extends TestCase
 
     public function test_get_a_non_existing_contact()
     {
-
         $token = $this->getToken();
 
         // real test - get the contact
         $data = array();
         $response = $this->json('POST',
-                        'api/contact/1',
-                        $data,
-                        ['HTTP_Authorization' => 'Bearer '.$token]
-                    );
-
+            'api/contact/1',
+            $data,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
         $response->assertStatus(404);
     }
@@ -139,26 +133,23 @@ class ContactsApiTest extends TestCase
         $new_contact['ContactFirstname'] = 'George';
         $new_contact['ContactLastname'] = 'Manolopoulos';
         $response = $this->json(
-                            'POST',
-                            'api/add_contact',
-                            $new_contact,
-                            ['HTTP_Authorization' => 'Bearer '.$token]
+            'POST',
+            'api/add_contact',
+            $new_contact,
+            ['HTTP_Authorization' => 'Bearer '.$token]
         );
-
 
         $response->assertStatus(201);
 
         $Contact = $response->decodeResponseJson('data');
         $this->assertCount(1, Contact::all() );
 
-
-
         $response = $this->json(
             'DELETE',
             'api/contact/'.$Contact['ContactID'],
             array(),
-            ['HTTP_Authorization' => 'Bearer '.$token]);
-
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
         $response->assertStatus(204);
         $this->assertCount(0, Contact::all() );
@@ -172,12 +163,11 @@ class ContactsApiTest extends TestCase
         $new_contact['ContactFirstname'] = 'George';
         $new_contact['ContactLastname'] = 'Manolopoulos';
         $response = $this->json(
-                            'POST',
-                            'api/add_contact',
-                            $new_contact,
-                            ['HTTP_Authorization' => 'Bearer '.$token]
+            'POST',
+            'api/add_contact',
+            $new_contact,
+            ['HTTP_Authorization' => 'Bearer '.$token]
         );
-
 
         $response->assertStatus(201);
 
@@ -191,7 +181,8 @@ class ContactsApiTest extends TestCase
             'PUT',
             'api/contact/'.$Contact['ContactID'],
             $edit_contact,
-            ['HTTP_Authorization' => 'Bearer '.$token]);
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
 
         $response->assertStatus(200);
