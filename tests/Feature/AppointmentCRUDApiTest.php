@@ -16,12 +16,12 @@ class AppointmentCRUDApiTest extends TestCase
 
     public function getToken_admin_role()
     {
-        $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret'];
+        $credentials = ['UsrEmail'=>'admin@email.gr','UsrPassword'=>'secret'];
 
         $User = new User;
         $User->UsrFirstname = 'admin';
         $User->UsrLastname = 'admin';
-        $User->UsrEmail = 'test@email.gr';
+        $User->UsrEmail = 'admin@email.gr';
         $User->UsrRoleID  = 1; // Admin
         $User->UsrPassword = Hash::make('secret');
         $User->save();
@@ -34,12 +34,12 @@ class AppointmentCRUDApiTest extends TestCase
 
     public function getToken_user_role()
     {
-        $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret'];
+        $credentials = ['UsrEmail'=>'user@email.gr','UsrPassword'=>'secret'];
 
         $User = new User;
-        $User->UsrFirstname = 'admin';
-        $User->UsrLastname = 'admin';
-        $User->UsrEmail = 'test@email.gr';
+        $User->UsrFirstname = 'user';
+        $User->UsrLastname = 'user';
+        $User->UsrEmail = 'user@email.gr';
         $User->UsrRoleID  = 2; // User
         $User->UsrPassword = Hash::make('secret');
         $User->save();
@@ -112,5 +112,72 @@ class AppointmentCRUDApiTest extends TestCase
 
     }
 
+    /**
+    * @test
+    */
+    public function delete_appointment_by_admin()
+    {
+        $token = $this->getToken_user_role();
 
+        $data_params['ApntDate'] = '2019-01-01 11:54:00';
+        $data_params['ApntContactID'] = 1;
+        $data_params['Comments'] = 'Examination';
+        $response = $this->json(
+            'POST',
+            'api/add_appointment',
+            $data_params,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
+
+
+        $response->assertStatus(201);
+        $this->assertCount( 1, Appointment::all() );
+
+        $token = $this->getToken_admin_role();
+
+
+        $response = $this->json(
+            'DELETE',
+            'api/appointment/1',
+            $data_params,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
+
+        $response->assertStatus(204);
+        $this->assertCount(0, Appointment::all() );
+    }
+
+    /**
+    * @test
+    */
+    public function delete_appointment_by_user_other_than_the_one_created_the_appointment()
+    {
+
+        $token = $this->getToken_admin_role();
+
+        $data_params['ApntDate'] = '2019-01-01 11:54:00';
+        $data_params['ApntContactID'] = 1;
+        $data_params['Comments'] = 'Examination';
+        $response = $this->json(
+            'POST',
+            'api/add_appointment',
+            $data_params,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
+
+        $response->assertStatus(201);
+        $this->assertCount( 1, Appointment::all() );
+
+        $token = $this->getToken_user_role();
+
+        $response = $this->json(
+            'DELETE',
+            'api/appointment/1',
+            $data_params,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
+
+        $response->assertStatus(401);
+        $this->assertCount( 1, Appointment::all() );
+    }
 }

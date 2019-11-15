@@ -32,6 +32,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 
     Route::post('add_appointment', 'ApiControllers\AppointmentController@addAppointment');
     Route::put('appointment/{appointment}', 'ApiControllers\AppointmentController@updateAppointment');
+    Route::delete('appointment/{appointment}', 'ApiControllers\AppointmentController@deleteAppointment');
 
     Route::post('logout', 'ApiControllers\LoginController@logout');
 

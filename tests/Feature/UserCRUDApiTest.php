@@ -114,27 +114,27 @@ class UserCRUDApiTest extends TestCase
         $this->assertCount( 2, User::all() );
     }
 
-        /** @test */
-        public function test_user_updates_his_information()
-        {
-            $token = $this->getToken_user_role();
+    /** @test */
+    public function test_user_updates_his_information()
+    {
+        $token = $this->getToken_user_role();
 
-            $update_args['UsrFirstname'] = 'Miltos';
-            $update_args['UsrLastname'] = 'Makridis';
+        $update_args['UsrFirstname'] = 'Miltos';
+        $update_args['UsrLastname'] = 'Makridis';
 
-            $response = $this->json(
-                    'POST',
-                    'api/update_user',
-                    $update_args,
-                    ['HTTP_Authorization' => 'Bearer '.$token]
-            );
+        $response = $this->json(
+            'POST',
+            'api/update_user',
+            $update_args,
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
 
-            $response->assertStatus(200);
+        $response->assertStatus(200);
 
-            $User = User::where('UsrEmail','test@email.gr')->first();
+        $User = User::where('UsrEmail','test@email.gr')->first();
 
-            $this->assertEquals($User->UsrFirstname, 'Miltos');
-            $this->assertEquals($User->UsrLastname, 'Makridis');
-        }
+        $this->assertEquals($User->UsrFirstname, 'Miltos');
+        $this->assertEquals($User->UsrLastname, 'Makridis');
+    }
 
 }

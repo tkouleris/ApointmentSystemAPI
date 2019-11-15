@@ -47,4 +47,22 @@ class AppointmentController extends Controller
         $results['data'] = $upd_appnt;
         return response()->json($results,200);
     }
+
+    public function deleteAppointment(Appointment $appointment, Request $request)
+    {
+        $token = $this->jwt->get_token_from_request( $request );
+        $currentUser = $this->UserRepository->findByToken( $token );
+
+
+        if( ($appointment->ApntUsrID != $currentUser->UsrID) && !$currentUser->isAdmin() )
+        {
+            $results['success'] = false;
+            return response()->json($results,401);
+        }
+
+        $deleted_appnt = $this->AppntRepository->delete( $appointment->ApntID);
+
+        $results['success'] = true;
+        return response()->json($results,204);
+    }
 }

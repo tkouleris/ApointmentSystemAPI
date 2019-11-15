@@ -38,6 +38,6 @@ class AppointmentRepository implements IAppointmentRepository{
 
     public function delete( $id )
     {
-        // TODO
+        return $this->Appointment::destroy($id);
     }
 }
