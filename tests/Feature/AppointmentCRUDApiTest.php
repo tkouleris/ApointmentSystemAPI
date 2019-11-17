@@ -180,4 +180,28 @@ class AppointmentCRUDApiTest extends TestCase
         $response->assertStatus(401);
         $this->assertCount( 1, Appointment::all() );
     }
+
+        /** @test */
+        public function appointments_list_with_correct_credentials()
+        {
+            $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret'];
+
+            $User = new User;
+            $User->UsrFirstname = 'admin';
+            $User->UsrLastname = 'admin';
+            $User->UsrEmail = 'test@email.gr';
+            $User->UsrRoleID  = 1;
+            $User->UsrPassword = Hash::make('secret');
+            $User->save();
+
+            $response = $this->post('api/login',$credentials);
+            $token = $response->decodeResponseJson('token');
+
+            $response = $this->json('GET',
+                                    'api/appointments',
+                                    array()
+                                    ,['HTTP_Authorization' => 'Bearer '.$token]
+                                );
+            $response->assertStatus(200);
+        }
 }

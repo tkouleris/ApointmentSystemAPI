@@ -65,4 +65,11 @@ class AppointmentController extends Controller
         $results['success'] = true;
         return response()->json($results,204);
     }
+
+    public function getAppointment(Request $request)
+    {
+        $results['success'] = true;
+        $results['data'] = $this->AppntRepository->list( array() );
+        return response()->json($results,200);
+    }
 }
