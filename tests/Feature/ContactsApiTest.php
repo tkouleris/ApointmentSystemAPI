@@ -101,7 +101,7 @@ class ContactsApiTest extends TestCase
 
         // real test - get the contact
         $data = array();
-        $response = $this->json('POST',
+        $response = $this->json('GET',
             'api/contact/1',
             $data,
             ['HTTP_Authorization' => 'Bearer '.$token]
@@ -117,7 +117,7 @@ class ContactsApiTest extends TestCase
 
         // real test - get the contact
         $data = array();
-        $response = $this->json('POST',
+        $response = $this->json('GET',
             'api/contact/1',
             $data,
             ['HTTP_Authorization' => 'Bearer '.$token]
