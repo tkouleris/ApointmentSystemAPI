@@ -50,9 +50,7 @@ class AppointmentCRUDApiTest extends TestCase
         return $token;
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function create_new_appointment()
     {
         $token = $this->getToken_user_role();
@@ -72,9 +70,7 @@ class AppointmentCRUDApiTest extends TestCase
         $this->assertCount( 1, Appointment::all() );
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function update_appointment()
     {
         $token = $this->getToken_user_role();
@@ -112,9 +108,7 @@ class AppointmentCRUDApiTest extends TestCase
 
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function delete_appointment_by_admin()
     {
         $token = $this->getToken_user_role();
@@ -147,9 +141,7 @@ class AppointmentCRUDApiTest extends TestCase
         $this->assertCount(0, Appointment::all() );
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function delete_appointment_by_user_other_than_the_one_created_the_appointment()
     {
 
@@ -197,7 +189,8 @@ class AppointmentCRUDApiTest extends TestCase
         $response = $this->post('api/login',$credentials);
         $token = $response->decodeResponseJson('token');
 
-        $response = $this->json('GET',
+        $response = $this->json(
+            'GET',
             'api/appointments',
             array(),
             ['HTTP_Authorization' => 'Bearer '.$token]
@@ -206,7 +199,8 @@ class AppointmentCRUDApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_get_an_existing_appointment()
+    /** @test */
+    public function get_an_existing_appointment()
     {
 
         $token = $this->getToken_user_role();
@@ -223,7 +217,8 @@ class AppointmentCRUDApiTest extends TestCase
 
         // real test - get the appointment
         $data = array();
-        $response = $this->json('GET',
+        $response = $this->json(
+            'GET',
             'api/appointment/1',
             $data,
             ['HTTP_Authorization' => 'Bearer '.$token]

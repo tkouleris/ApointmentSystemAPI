@@ -33,7 +33,7 @@ class ContactsApiTest extends TestCase
     }
 
     /** @test */
-    public function test_contacts_list_with_correct_credentials()
+    public function contacts_list_with_correct_credentials()
     {
         $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret'];
 
@@ -48,34 +48,39 @@ class ContactsApiTest extends TestCase
         $response = $this->post('api/login',$credentials);
         $token = $response->decodeResponseJson('token');
 
-        $response = $this->json('GET',
-                                'api/contacts',
-                                array()
-                                ,['HTTP_Authorization' => 'Bearer '.$token]
-                            );
+        $response = $this->json(
+            'GET',
+            'api/contacts',
+            array(),
+            ['HTTP_Authorization' => 'Bearer '.$token]
+        );
+
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function test_contacts_list_with_wrong_credentials()
+    public function contacts_list_with_wrong_credentials()
     {
 
-        $response = $this->json('GET',
-                                'api/contacts',
-                                array()
-                                ,['HTTP_Authorization' => 'Bearer '.'123']
-                            );
+        $response = $this->json(
+            'GET',
+            'api/contacts',
+            array(),
+            ['HTTP_Authorization' => 'Bearer '.'123']
+        );
 
         $response->assertStatus(401);
     }
 
-    public function test_insert_a_new_contact()
+    /** @test */
+    public function insert_a_new_contact()
     {
         $token = $this->getToken();
 
         $new_contact['ContactFirstname'] = 'George';
         $new_contact['ContactLastname'] = 'Manolopoulos';
-        $response = $this->json('POST',
+        $response = $this->json(
+            'POST',
             'api/add_contact',
             $new_contact,
             ['HTTP_Authorization' => 'Bearer '.$token]
@@ -85,7 +90,8 @@ class ContactsApiTest extends TestCase
         $this->assertCount(1, Contact::all() );
     }
 
-    public function test_get_an_existing_contact()
+    /** @test */
+    public function get_an_existing_contact()
     {
 
         $token = $this->getToken();
@@ -93,7 +99,8 @@ class ContactsApiTest extends TestCase
         // First add a contact
         $new_contact['ContactFirstname'] = 'George';
         $new_contact['ContactLastname'] = 'Manolopoulos';
-        $response = $this->json('POST',
+        $response = $this->json(
+            'POST',
             'api/add_contact',
             $new_contact,
             ['HTTP_Authorization' => 'Bearer '.$token]
@@ -101,7 +108,8 @@ class ContactsApiTest extends TestCase
 
         // real test - get the contact
         $data = array();
-        $response = $this->json('GET',
+        $response = $this->json(
+            'GET',
             'api/contact/1',
             $data,
             ['HTTP_Authorization' => 'Bearer '.$token]
@@ -111,13 +119,15 @@ class ContactsApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_get_a_non_existing_contact()
+    /** @test */
+    public function get_a_non_existing_contact()
     {
         $token = $this->getToken();
 
         // real test - get the contact
         $data = array();
-        $response = $this->json('GET',
+        $response = $this->json(
+            'GET',
             'api/contact/1',
             $data,
             ['HTTP_Authorization' => 'Bearer '.$token]
@@ -126,7 +136,8 @@ class ContactsApiTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_delete_a_contact()
+    /** @test */
+    public function delete_a_contact()
     {
         $token = $this->getToken();
 
@@ -155,8 +166,8 @@ class ContactsApiTest extends TestCase
         $this->assertCount(0, Contact::all() );
     }
 
-
-    public function test_update_a_contact()
+    /** @test */
+    public function update_a_contact()
     {
         $token = $this->getToken();
 

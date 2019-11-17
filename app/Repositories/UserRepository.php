@@ -42,11 +42,6 @@ class UserRepository implements IUserRepository{
         return $this->User::findOrFail($id);
     }
 
-    public function delete( $id )
-    {
-        // TODO
-    }
-
     public function findByToken($token)
     {
         return JWTAuth::toUser($token);

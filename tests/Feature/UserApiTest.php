@@ -49,9 +49,7 @@ class UserCRUDApiTest extends TestCase
         return $token;
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function create_new_user_by_role_other_than_admin()
     {
         $token = $this->getToken_user_role();
@@ -115,7 +113,7 @@ class UserCRUDApiTest extends TestCase
     }
 
     /** @test */
-    public function test_user_updates_his_information()
+    public function user_updates_his_information()
     {
         $token = $this->getToken_user_role();
 

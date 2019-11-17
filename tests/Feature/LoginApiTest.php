@@ -31,7 +31,8 @@ class LoginApiTest extends TestCase
         return $token;
     }
 
-    public function test_login_attempt_without_credentials()
+    /** @test */
+    public function login_attempt_without_credentials()
     {
         $response = $this->post('api/login');
 
@@ -39,7 +40,7 @@ class LoginApiTest extends TestCase
     }
 
     /** @test */
-    public function test_login_attempt_with_wrong_credentials()
+    public function login_attempt_with_wrong_credentials()
     {
 //        $this->withoutExceptionHandling();
 
@@ -59,7 +60,7 @@ class LoginApiTest extends TestCase
     }
 
     /** @test */
-    public function test_login_attempt_with_correct_credentials()
+    public function login_attempt_with_correct_credentials()
     {
         $credentials = ['UsrEmail'=>'test@email.gr','UsrPassword'=>'secret'];
 
@@ -77,7 +78,8 @@ class LoginApiTest extends TestCase
         $this->assertArrayHasKey('token', $response->decodeResponseJson() );
     }
 
-    public function test_logout()
+    /** @test */
+    public function logout()
     {
         $token = $this->getToken_admin_role();
 
