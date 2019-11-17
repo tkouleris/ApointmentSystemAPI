@@ -30,7 +30,8 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::post('add_user', 'ApiControllers\UserController@addUser');
     Route::post('update_user', 'ApiControllers\UserController@updateUser');
 
-    Route::get('appointments', 'ApiControllers\AppointmentController@getAppointment');
+    Route::get('appointments', 'ApiControllers\AppointmentController@getAppointments');
+    Route::get('appointment/{appointment}', 'ApiControllers\AppointmentController@getAppointment');
     Route::post('add_appointment', 'ApiControllers\AppointmentController@addAppointment');
     Route::put('appointment/{appointment}', 'ApiControllers\AppointmentController@updateAppointment');
     Route::delete('appointment/{appointment}', 'ApiControllers\AppointmentController@deleteAppointment');
